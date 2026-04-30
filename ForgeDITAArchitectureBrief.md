@@ -37,8 +37,6 @@ DITA content remains:
 
 The platform does not reinterpret or reshape the content model to fit internal storage or UI constraints.
 
----
-
 ### 2.2 Semantic Registry (Tenant-Scoped)
 
 DITA behavior is governed through a declarative semantic layer.
@@ -58,8 +56,6 @@ Key properties:
 
 No service is allowed to privately interpret DITA structures outside this registry.
 
----
-
 ### 2.3 Graph-Aware Core Services
 
 DITA is treated as a graph, not a collection of files.
@@ -77,8 +73,6 @@ This supports:
 * reliable validation
 * consistent publishing inputs
 
----
-
 ### 2.4 Bring Your Own Editor (BYOE)
 
 Editors are treated as clients, not control points.
@@ -88,8 +82,6 @@ Editors are treated as clients, not control points.
 * No editor-specific behavior defines system semantics
 
 This separates authoring experience from system logic.
-
----
 
 ### 2.5 Immutable Publishing Model
 
@@ -107,8 +99,6 @@ Outputs are:
 * rebuildable
 * explainable
 * auditable
-
----
 
 ## 3. Why This Matters
 
@@ -134,8 +124,6 @@ This model is designed to address long-standing failure points in structured con
 * Content remains clean and portable
 * Toolchain and behavior are explicitly defined
 
----
-
 ## 4. Open Questions
 
 This model is intentionally direct and may expose trade-offs.
@@ -146,8 +134,6 @@ Key areas for validation:
 * Are there edge cases where implicit behavior is required for usability?
 * What are the performance implications of fully graph-aware services at scale?
 * How should validation responsibilities be balanced between client and server?
-
----
 
 ## 5. Intent
 
@@ -162,8 +148,6 @@ The goal is simple:
 * reduce platform-induced complexity
 * support real-world publishing discipline
 
----
-
 ## 6. Request for Feedback
 
 If you have experience with DITA at scale, your perspective would be valuable.
@@ -173,7 +157,5 @@ Specifically:
 * Where does this model break?
 * What assumptions are incomplete?
 * What would you change before implementation?
-
----
 
 ForgeDITA is currently in architecture-first development toward MVP.
