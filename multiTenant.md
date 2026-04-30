@@ -242,5 +242,10 @@ Questions:
 * What assumptions are incomplete?
 * What would you change before implementation?
 
+## Related
+
+* Website: <https://forgedita.com>
+* Contact: [hello@forgedita.com](mailto:hello@forgedita.com)
+
 ForgeDITA is in architecture-first development toward MVP.
 Structured content, forged right.

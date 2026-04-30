@@ -158,4 +158,9 @@ Specifically:
 * What assumptions are incomplete?
 * What would you change before implementation?
 
+## Related
+
+* Website: <https://forgedita.com>
+* Contact: [hello@forgedita.com](mailto:hello@forgedita.com)
+
 ForgeDITA is currently in architecture-first development toward MVP.
