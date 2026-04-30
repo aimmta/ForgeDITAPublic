@@ -21,9 +21,13 @@ This repository exists to document an alternative.
 
 ## Contents
 
+This repository will grow into a set of documents that explain the ForgeDITA architecture to experienced DITA and structured-authoring professionals.
+
+The current documents are:
+
 ### Architecture Brief
 
-A short, focused document outlining the core ForgeDITA model:
+A focused overview of the core ForgeDITA model:
 
 * native XML as the system of record
 * tenant-scoped semantic registry
@@ -31,34 +35,43 @@ A short, focused document outlining the core ForgeDITA model:
 * BYOE (Bring Your Own Editor)
 * immutable, reproducible publishing
 
+### Multi-Tenant Architecture and Toolchain Model
+
+A deeper look at how ForgeDITA approaches multi-tenancy:
+
+* tenant isolation across all system layers
+* toolchain registry as the control point for processing
+* versioned, immutable publishing environments
+* reproducible releases tied to explicit inputs
+
 Start here:
 
-* [ForgeDITA Architecture Brief](ForgeDITAArchitectureBrief.md)
+* [Architecture Brief](ForgeDITAArchitectureBrief.md)
 * [Multi-Tenant Architecture and the Toolchain Registry Model](multiTenant.md)
 
 ## What This Is
 
 * A working set of ideas
 * A technical position on how DITA systems should behave
-* A basis for discussion with experienced practitioners
+* A growing body of architectural documentation
 
 ## What This Is Not
 
 * A marketing site
 * A feature list
-* A promise of implementation details
+* A finalized implementation
 
 The goal is clarity, not hype.
 
 ## Status
 
-ForgeDITA is currently in **architecture-first development**.
+ForgeDITA is in **architecture-first development**.
 
-The product is moving toward MVP. The ideas documented here are intended to be stable enough for technical review, but may evolve as implementation begins.
+The goal is to validate the model before building the full system.
 
 ## Feedback
 
-If you have experience with DITA, structured content systems, or large-scale publishing pipelines, thoughtful feedback is welcome.
+If you work with DITA at scale, your perspective is valuable.
 
 Key questions:
 
@@ -66,13 +79,9 @@ Key questions:
 * What assumptions are incomplete?
 * What would you change before implementation?
 
-## License
+## Contact
 
-(To be determined)
-
-## Related
-
-* Website: <https://forgedita.com>
-* Contact: [hello@forgedita.com](mailto:hello@forgedita.com)
+[hello@forgedita.com](mailto:hello@forgedita.com)
+https://forgedita.com
 
 Structured content, forged right.
