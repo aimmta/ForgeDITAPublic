@@ -33,7 +33,8 @@ A short, focused document outlining the core ForgeDITA model:
 
 Start here:
 
-* `ForgeDITAArchitectureBrief.md`
+* [ForgeDITA Architecture Brief](ForgeDITAArchitectureBrief.md)
+* [Multi-Tenant Architecture and the Toolchain Registry Model](multiTenant.md)
 
 ## What This Is
 
