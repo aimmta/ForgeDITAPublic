@@ -409,10 +409,10 @@ Particularly:
 - Website: <https://forgedita.com>
 - Contact: <hello@forgedita.com>
 
----
-
-Copyright 2026 ForgeDITA.
-
 ForgeDITA is currently in architecture-first development toward MVP.
 
 Structured content infrastructure designed for long-term maintainability.
+
+---
+
+Copyright 2026 ForgeDITA.

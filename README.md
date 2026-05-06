@@ -8,8 +8,6 @@ This is not the product codebase.
 
 It is the thinking behind the product.
 
----
-
 ## Why This Repository Exists
 
 Many structured content environments slowly become operationally difficult to live with.
@@ -33,8 +31,6 @@ ForgeDITA exists because too many organizations quietly accept this trajectory a
 
 This repository documents an alternative architectural approach.
 
----
-
 ## Core Position
 
 ForgeDITA is built around a direct premise:
@@ -53,8 +49,6 @@ The platform is intentionally designed around:
 The goal is not to accumulate more enterprise complexity.
 
 The goal is to reduce operational fragility before it becomes normalized.
-
----
 
 ## Contents
 
@@ -85,23 +79,12 @@ A deeper exploration of:
 - graph-aware multi-tenancy
 - and operational reproducibility
 
----
-
-## Start Here
-
-[Architecture Brief](ForgeDITAArchitectureBrief.md)
-[Multi-Tenant Architecture and the Toolchain Registry Model](multiTenant.md)
-
----
-
 ## What This Repository Is
 
 - a working architectural model
 - a technical position on maintainable DITA infrastructure
 - a set of explicit assumptions and trade-offs
 - an attempt to make system behavior understandable
-
----
 
 ## What This Repository Is Not
 
@@ -113,8 +96,6 @@ A deeper exploration of:
 The goal is clarity.
 
 Not hype.
-
----
 
 ## Why Architecture-First
 
@@ -132,8 +113,6 @@ before large-scale implementation.
 
 The architecture matters because operational fragility is usually easier to prevent than to remove later.
 
----
-
 ## Feedback
 
 If you operate DITA systems at scale, your perspective would be valuable.
@@ -145,8 +124,6 @@ Particularly:
 - What hidden complexity risks remain?
 - Which trade-offs would organizations reject?
 - What long-term maintenance problems are still unsolved?
-
----
 
 ## Contact
 
