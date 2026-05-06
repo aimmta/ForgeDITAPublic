@@ -2,250 +2,399 @@
 
 ## Multi-Tenant Architecture and the Toolchain Registry Model
 
-## 1. Problem
+## 1. Why Multi-Tenancy Usually Fails in Practice
 
-Multi-tenancy in CCMS platforms is often treated as a deployment concern rather than an architectural principle.
+Multi-tenancy in many CCMS environments is treated primarily as a deployment model.
 
-In many systems, “multi-tenant” means:
+Shared infrastructure is layered with:
 
-* shared infrastructure with partial logical separation
-* configuration overlays that vary by customer
-* environment-level isolation without semantic isolation
+- partial tenant isolation
+- configuration overlays
+- mutable environments
+- and operational convention
 
-This creates predictable problems:
+At small scale this can appear manageable.
 
-* publishing behavior varies across environments
-* toolchains drift over time
-* tenant-specific rules leak into shared logic
-* reproducibility becomes difficult or impossible
+Over time it often creates:
 
-For DITA-based systems, the problem is more acute.
+- publishing drift
+- inconsistent behavior
+- hidden coupling
+- operational uncertainty
+- and tenant-specific workarounds embedded inside shared platform logic
 
-DITA processing is not just storage and retrieval. It includes:
+For DITA systems, the problem becomes much more serious.
 
-* specialization handling
-* key resolution
-* subject scheme interpretation
-* validation rules
-* publishing transformations
+DITA processing is not just storage and retrieval.
 
-If these behaviors are not fully isolated per tenant, the platform cannot guarantee consistency.
+It includes:
+
+- specialization handling
+- key resolution
+- metadata interpretation
+- subject scheme behavior
+- validation semantics
+- publishing transformations
+- and graph-aware processing logic
+
+If these behaviors are not fully isolated and explicitly defined, operational consistency becomes difficult to guarantee.
+
+Eventually teams stop trusting:
+
+- whether environments behave identically
+- whether releases are reproducible
+- whether validation is consistent
+- and whether publishing behavior changed silently over time
+
+ForgeDITA treats this as an architectural problem, not merely an infrastructure problem.
 
 ## 2. ForgeDITA Position
 
-Multi-tenancy must extend beyond infrastructure.
+Multi-tenancy must extend beyond hosting.
 
 It must include:
 
-* content
-* semantics
-* processing
-* publishing
+- content
+- semantics
+- graph behavior
+- validation
+- processing
+- publishing
+- and operational state
 
-Every layer of the system must be tenant-scoped and explicitly defined.
+Every layer of the platform must remain:
 
-ForgeDITA approaches this through a combination of strict boundaries and a central concept: the toolchain registry.
+- tenant-scoped
+- explicit
+- reproducible
+- and explainable
+
+ForgeDITA approaches this through strict architectural boundaries and a central concept:
+
+### The Toolchain Registry
 
 ## 3. The Toolchain Registry
 
-The toolchain registry is the authoritative definition of how content is processed for a given tenant.
+The toolchain registry is the authoritative definition of how content is processed for a tenant.
 
 It defines:
 
-* DITA-OT version
-* plugin set
-* catalog resolution
-* specialization shells and constraints
-* Schematron and validation rules
-* transformation parameters
-* publishing profiles
+- DITA-OT version
+- plugin sets
+- catalog resolution
+- specialization shells and constraints
+- Schematron and validation rules
+- publishing profiles
+- transformation parameters
+- semantic registry references
+- runtime processing expectations
 
-Each registry entry represents a complete, versioned toolchain.
+Each registry entry represents a complete, versioned processing environment.
 
-Key properties:
+## 3.1 Why This Exists
 
-### 3.1 Tenant-Scoped
+Many publishing environments drift slowly over time.
+
+A plugin changes.
+A runtime changes.
+A transform evolves.
+A hidden dependency appears.
+A server configuration differs slightly between environments.
+
+Eventually organizations cannot confidently answer:
+
+- Why did this output change?
+- Which plugins produced this release?
+- Can this build be reproduced?
+- Which validation rules were active?
+- Did tenant behavior change unexpectedly?
+
+The toolchain registry exists to make processing behavior explicit and reproducible.
+
+## 3.2 Tenant-Scoped
 
 Each tenant has its own registry.
 
-* No shared global defaults
-* No hidden inheritance
-* No cross-tenant mutation
+- no shared global defaults
+- no hidden inheritance
+- no cross-tenant mutation
+- no platform-level reinterpretation of tenant behavior
 
-### 3.2 Versioned
+Tenant isolation is treated as an architectural boundary, not a convenience layer.
+
+## 3.3 Versioned
 
 Toolchains are immutable once published.
 
-* Changes produce new versions
-* Previous versions remain available
-* Releases can reference exact toolchain states
+- changes produce new versions
+- historical versions remain available
+- releases reference exact toolchain states
 
-### 3.3 Explicit
+This supports:
+
+- reproducibility
+- auditability
+- explainability
+- and safer operational evolution
+
+## 3.4 Explicit
 
 All processing behavior is declared.
 
-* No implicit platform assumptions
-* No editor-defined semantics
-* No hidden configuration layers
+- no implicit runtime assumptions
+- no undocumented editor behavior
+- no hidden platform semantics
+- no mutable publishing environments
 
-## 4. Multi-Tenancy from Sub-Basement to Top-Floor
+The goal is operational clarity.
 
-ForgeDITA enforces tenant isolation at every layer of the system.
+Not operational magic.
 
-### 4.1 Storage Layer
+## 4. Multi-Tenancy from Foundation to Runtime
 
-* Content stored per tenant
-* No shared content pools
-* Clean export always available
+ForgeDITA enforces tenant isolation throughout the entire system.
 
-### 4.2 Semantic Layer
+## 4.1 Storage Layer
 
-* Tenant-scoped semantic registry
-* Defines specialization behavior and metadata interpretation
-* No service may invent private semantics
+- content stored per tenant
+- no shared content pools
+- clean export always available
+- native XML preserved as system of record
 
-### 4.3 Graph Layer
+Portability remains operationally important.
 
-* Keys, conrefs, maps, and relationships resolved within tenant boundaries
-* Graph operations are deterministic and reproducible
+Organizations should not lose ownership of their content because platform assumptions became embedded over time.
 
-### 4.4 Validation Layer
+## 4.2 Semantic Layer
 
-* Validation rules tied to tenant semantics and toolchain
-* Client and server validation aligned but independent
+Each tenant maintains its own semantic registry.
 
-### 4.5 Toolchain Layer
+This defines:
 
-* Toolchain registry defines all processing inputs
-* DITA-OT and plugins versioned and pinned
-* No shared mutable environments
+- specialization behavior
+- metadata interpretation
+- processing expectations
+- validation assumptions
+- and publishing semantics
 
-### 4.6 Publishing Layer
+No service is allowed to privately invent semantics outside the registry.
 
-* Publishing is a reproducible event
-* Each output references:
+This attempts to prevent one of the most common long-term failure patterns in DITA environments:
+**Scattered semantics across disconnected operational layers**
 
-  * content baseline
-  * semantic registry version
-  * toolchain version
-  * publishing profile
+## 4.3 Graph Layer
 
-### 4.7 API Layer
+All graph operations remain tenant-scoped.
 
-* All services are tenant-aware by design
-* No global endpoints with hidden tenant logic
-* Behavior is consistent across all clients
+This includes:
 
-## 5. Why the Toolchain Registry Matters
+- keys
+- conrefs
+- maps
+- metadata relationships
+- subject schemes
+- baseline relationships
 
-The registry is the control point that makes multi-tenancy real.
+Graph behavior should remain:
 
-Without it:
+- deterministic
+- explainable
+- and reproducible
 
-* toolchains drift
-* environments diverge
-* publishing becomes unreliable
-* debugging becomes guesswork
+Many operational inconsistencies emerge when graph interpretation differs across tools or services.
 
-With it:
+ForgeDITA attempts to centralize graph understanding.
 
-### 5.1 Reproducibility
+## 4.4 Validation Layer
 
-Any release can be rebuilt from:
+Validation rules remain tied to:
 
-* content
-* semantic registry
-* toolchain definition
+- tenant semantics
+- toolchain state
+- and explicit processing expectations
 
-### 5.2 Isolation
+Client and server validation should remain aligned while still operating independently.
 
-Tenant behavior is fully contained.
+The goal is consistency without hidden coupling.
 
-* No accidental cross-impact
-* No shared configuration surprises
+## 4.5 Toolchain Layer
 
-### 5.3 Transparency
+The toolchain registry defines all processing inputs.
 
-Processing is inspectable.
+This includes:
 
-* Inputs are known
-* transformations are defined
-* outputs are explainable
+- DITA-OT versions
+- plugin versions
+- runtime configuration
+- catalog behavior
+- transformation expectations
+- validation configuration
 
-### 5.4 Portability
+Publishing environments should remain inspectable and reproducible.
 
-Toolchains can be exported and reused.
+Not dependent on operational memory.
 
-* migration becomes feasible
-* environments can be recreated
+## 4.6 Publishing Layer
 
-## 6. Comparison with Typical Approaches
+Publishing is treated as a deterministic system event.
 
-Typical CCMS platforms:
+Each release references:
 
-* rely on shared environments
-* accumulate configuration over time
-* mix tenant behavior with platform logic
-* treat publishing as an operational side effect
+- content baseline
+- semantic registry version
+- toolchain version
+- publishing profile
+- validation state
 
-ForgeDITA:
+Outputs should remain:
 
-* isolates tenants completely
-* defines processing declaratively
-* pins toolchains to releases
-* treats publishing as a deterministic system function
+- rebuildable
+- auditable
+- explainable
+- and operationally trustworthy
 
-## 7. Trade-offs
+## 4.7 API Layer
 
-This model introduces constraints.
+All services are tenant-aware by design.
 
-* requires explicit configuration
-* reduces reliance on implicit defaults
-* demands discipline in versioning
+- no hidden tenant routing
+- no shared mutable semantics
+- no platform-level behavioral ambiguity
 
-However, these constraints are intentional.
+Behavior should remain consistent across all clients.
 
-They replace hidden complexity with visible structure.
+## 5. Why Existing Multi-Tenant Systems Drift
 
-## 8. Open Questions
+Many systems become operationally fragile because:
 
-* How should toolchain promotion workflows be managed across environments?
-* What governance is required for semantic registry evolution?
-* How can performance be maintained with fully isolated graph operations?
-* What developer experience is required to keep the system usable?
+- configuration accumulates faster than governance
+- mutable environments create publishing uncertainty
+- semantics become scattered across tooling layers
+- customization mixes with platform logic
+- and operational behavior becomes dependent on institutional memory
 
-## 9. Conclusion
+Organizations compensate through:
 
-Multi-tenancy is not a hosting feature.
+- release rituals
+- undocumented procedures
+- manual verification
+- publishing workarounds
+- and workflow choreography
 
-It is an architectural commitment.
+The environment may still function.
 
-For DITA systems, that commitment must include:
+But predictability gradually declines.
 
-* semantics
-* processing
-* publishing
+ForgeDITA attempts to reduce that entropy through:
 
-The toolchain registry provides the mechanism to enforce that commitment.
+- explicit structure
+- immutable processing environments
+- versioned semantics
+- and architectural isolation
 
-ForgeDITA’s position is direct:
+## 6. Architectural Trade-Offs
 
-If the system cannot guarantee tenant isolation and reproducible publishing, it is not truly multi-tenant.
+This model introduces operational discipline intentionally.
 
-## 10. Request for Feedback
+It likely requires:
 
-This model is intended for practitioners who work with structured content at scale.
+- stronger governance
+- more explicit configuration
+- stricter version management
+- clearer lifecycle control
+- and reduced tolerance for undocumented operational behavior
+
+The architecture may increase:
+
+- up-front modeling effort
+- semantic governance overhead
+- storage duplication
+- and infrastructure complexity in some areas
+
+Those constraints are intentional.
+
+ForgeDITA favors:
+
+- explainability
+- reproducibility
+- portability
+- and maintainability
+
+over operational ambiguity.
+
+## 7. Open Questions
+
+Important unresolved questions remain.
+
+## Toolchain Promotion
+
+How should toolchain promotion workflows operate across environments without reintroducing drift?
+
+## Semantic Governance
+
+What governance structures are required for long-lived semantic evolution?
+
+## Performance
+
+How can graph-aware isolation remain performant at enterprise scale?
+
+## Operational Experience
+
+How much explicitness can organizations realistically sustain before usability suffers?
+
+## Adoption Path
+
+How can existing environments transition toward explicit operational models without excessive migration burden?
+
+These are practical concerns, not theoretical ones.
+
+ForgeDITA should only succeed if the operational model remains usable in real organizations.
+
+## 8. Conclusion
+
+Multi-tenancy is not merely a hosting feature.
+
+For DITA systems, it is an architectural commitment that must include:
+
+- semantics
+- graph behavior
+- processing
+- validation
+- publishing
+- and operational reproducibility
+
+The toolchain registry exists to make those behaviors explicit.
+
+ForgeDITA’s position is intentionally direct:
+
+If a system cannot guarantee:
+
+- reproducible publishing
+- explicit semantics
+- explainable processing
+- and tenant isolation
+
+then operational trust eventually erodes.
+
+ForgeDITA is an attempt to build infrastructure that resists that erosion.
+
+## 9. Request for Feedback
+
+If you work with structured content systems at scale, your perspective would be valuable.
 
 Questions:
 
-* Where does this model break in real-world use?
-* What assumptions are incomplete?
-* What would you change before implementation?
+- Where does this model become unrealistic?
+- Which assumptions fail operationally?
+- What hidden coupling risks remain?
+- What governance burdens are underestimated?
+- What practical failure modes should be explored further?
 
 ## Related
 
-* Website: <https://forgedita.com>
-* Contact: [hello@forgedita.com](mailto:hello@forgedita.com)
+- Website: <https://forgedita.com>
+- Contact: <hello@forgedita.com>
 
-ForgeDITA is in architecture-first development toward MVP.
-Structured content, forged right.
+ForgeDITA is currently in architecture-first development toward MVP.
+
+Structured content infrastructure designed for long-term operational maintainability.

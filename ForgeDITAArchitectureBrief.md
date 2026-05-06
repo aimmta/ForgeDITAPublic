@@ -1,166 +1,414 @@
 # ForgeDITA Architecture Brief
 
-## A Standards-First Model for Modern DITA CCMS
+## A Standards-First Operating Model for Maintainable DITA Infrastructure
 
-## 1. Problem
+## 1. Why This Exists
 
-“DITA support” has become a vague and overloaded claim.
+Many DITA environments become operationally fragile over time.
 
-In practice, it often means:
+The pattern is familiar to experienced practitioners:
 
-* partial XML handling
-* constrained authoring models
-* platform-shaped workflows
-* publishing pipelines that are difficult to reproduce
-* content that is technically exportable but operationally trapped
+- publishing pipelines drift
+- validation behavior becomes inconsistent
+- customization accumulates across disconnected layers
+- semantics become fragmented between editors, transforms, and operational convention
+- workflow overhead expands faster than actual content work
+- and tribal knowledge becomes required just to keep the system functioning
 
-For teams running serious structured content operations, these gaps create real risk:
+Teams adapt.
 
-* **Loss of semantic integrity** when XML is adapted to fit platform assumptions
-* **Publishing uncertainty** when outputs cannot be rebuilt deterministically
-* **Operational drag** from complex administration and opaque behavior
-* **Vendor dependency** that turns migration into a project instead of a capability
+They build spreadsheets.
+They memorize process choreography.
+They create workarounds for fragile publishing behavior.
+They normalize operational friction because the alternative feels unrealistic.
 
-The result is a category where the tooling often dictates the workflow, rather than supporting it.
+Eventually the system becomes difficult to evolve, difficult to trust, and difficult to leave.
 
-## 2. Core Model
+In many organizations, a content change may take minutes while approvals, coordination, publishing verification, and operational tracking consume days.
 
-ForgeDITA proposes a different architecture, grounded in a few strict principles.
+This document is an attempt to define a cleaner operating model for DITA-based infrastructure.
 
-### 2.1 Native XML as the System of Record
+Not just a better interface.
+Not just another CCMS.
+
+A more maintainable architectural foundation.
+
+## 2. The Problem with “DITA Support”
+
+“DITA support” has become an overloaded and often misleading claim.
+
+In practice, it frequently means:
+
+- partial XML handling
+- constrained authoring models
+- editor-defined behavior
+- opaque publishing pipelines
+- mutable runtime environments
+- platform-shaped workflows
+- content that is technically exportable but operationally trapped
+
+The result is often a system where the platform slowly dictates the workflow instead of supporting it.
+
+For organizations operating at scale, this creates real operational risk:
+
+### Loss of Semantic Integrity
+
+DITA semantics become scattered across:
+
+- editor configuration
+- Schematron layers
+- transforms
+- plugins
+- undocumented operational behavior
+
+No single source of truth exists.
+
+### Publishing Fragility
+
+Publishing environments drift over time.
+
+Outputs become dependent on:
+
+- mutable plugin stacks
+- shared DITA-OT environments
+- undocumented configuration behavior
+- operational tribal knowledge
+
+Teams stop trusting whether outputs can be reproduced consistently.
+
+### Operational Drag
+
+Complex administration, disconnected systems, approval choreography, and hidden dependencies gradually consume more energy than the documentation itself.
+
+### Vendor Dependency
+
+Migration becomes expensive because the platform has absorbed:
+
+- semantics
+- workflow assumptions
+- publishing behavior
+- and operational knowledge
+
+The content may still be XML.
+The operational environment often is not portable.
+
+## 3. ForgeDITA Core Position
+
+ForgeDITA is built around a direct premise:
+**Documentation infrastructure should remain understandable and maintainable over time.**
+
+The architecture is intentionally opinionated around:
+
+- explicit behavior
+- standards integrity
+- reproducibility
+- operational clarity
+- and long-term maintainability
+
+The goal is not feature accumulation.
+
+The goal is to prevent operational entropy from becoming the defining characteristic of the platform.
+
+## 4. Core Architectural Model
+
+### 4.1 Native XML as the System of Record
 
 DITA content remains:
 
-* unmodified
-* fully exportable
-* free of proprietary representation layers
+- unmodified
+- fully exportable
+- standards-compliant
+- free of proprietary representation layers
 
-The platform does not reinterpret or reshape the content model to fit internal storage or UI constraints.
+ForgeDITA does not reinterpret or reshape content to satisfy internal storage assumptions or UI constraints.
 
-### 2.2 Semantic Registry (Tenant-Scoped)
+This matters because portability is not just a migration feature.
 
-DITA behavior is governed through a declarative semantic layer.
+It is operational leverage.
+
+Organizations should be able to:
+
+- inspect their content directly
+- preserve standards integrity
+- move between environments
+- and maintain ownership of their publishing pipeline
+
+without reverse-engineering platform behavior.
+
+### 4.2 Tenant-Scoped Semantic Registry
+
+ForgeDITA centralizes DITA behavior into a declarative semantic registry.
 
 This registry defines:
 
-* specialization handling
-* attribute semantics
-* subject scheme integration
-* processing expectations
-
-Key properties:
-
-* **Tenant-scoped**: no cross-tenant leakage of semantics
-* **Explicit**: no hidden or editor-specific behavior
-* **Versioned**: changes are tracked and tied to releases
+- specialization handling
+- attribute semantics
+- metadata interpretation
+- subject scheme integration
+- validation expectations
+- processing behavior
+- publishing assumptions
 
 No service is allowed to privately interpret DITA structures outside this registry.
 
-### 2.3 Graph-Aware Core Services
+### Why This Matters
 
-DITA is treated as a graph, not a collection of files.
+In many systems, semantics become fragmented across:
 
-Core services operate with full awareness of:
+- editor configuration
+- transforms
+- validation layers
+- publishing plugins
+- operational convention
 
-* keys and key scopes
-* conrefs and reuse chains
-* maps and hierarchy
-* subject schemes and metadata relationships
+Behavior becomes difficult to reason about because the system no longer has a single explicit semantic model.
+
+ForgeDITA attempts to reverse that pattern.
+
+### Example
+
+A tenant may define a specialized hazard domain with tenant-specific expectations for:
+
+- severity handling
+- localization behavior
+- metadata inheritance
+- validation constraints
+- and publishing treatment
+
+In many environments, those rules become scattered across:
+
+- Schematron
+- editor extensions
+- transform customization
+- stylesheet logic
+- and operational documentation
+
+ForgeDITA attempts to centralize those semantics into a single explicit registry.
+
+### Key Properties
+
+#### Tenant-Scoped
+
+- no cross-tenant semantic leakage
+- no shared hidden defaults
+- no platform-level mutation of tenant behavior
+
+#### Explicit
+
+- no hidden editor semantics
+- no undocumented processing assumptions
+- no implicit platform reinterpretation
+
+#### Versioned
+
+- semantic evolution becomes trackable
+- releases reference exact semantic states
+- historical behavior remains explainable
+
+### 4.3 Graph-Aware Core Services
+
+ForgeDITA treats DITA as a graph, not a collection of files.
+
+Core services operate with awareness of:
+
+- keys and key scopes
+- conrefs and reuse chains
+- maps and hierarchy
+- subject schemes
+- metadata relationships
+- baseline relationships
 
 This supports:
 
-* accurate impact analysis
-* reliable validation
-* consistent publishing inputs
+- reliable validation
+- accurate impact analysis
+- deterministic publishing inputs
+- and more explainable system behavior
 
-### 2.4 Bring Your Own Editor (BYOE)
+Many operational problems in structured content systems emerge when graph relationships are only partially modeled or inconsistently interpreted.
 
-Editors are treated as clients, not control points.
+ForgeDITA attempts to make graph behavior explicit throughout the platform.
 
-* Oxygen is a first-class client
-* All operations occur through exposed APIs
-* No editor-specific behavior defines system semantics
+### 4.4 Bring Your Own Editor
 
-This separates authoring experience from system logic.
+ForgeDITA treats editors as clients, not control points.
 
-### 2.5 Immutable Publishing Model
+- Oxygen is a first-class client
+- all operations occur through exposed APIs
+- editor behavior does not define platform semantics
 
-Publishing is defined as a reproducible system event.
+This separation matters.
 
-Each release is pinned to:
+In many environments, operational logic slowly migrates into editor-specific integrations.
 
-* content baseline
-* semantic registry version
-* toolchain bundle (DITA-OT, plugins, configs)
-* publishing profile
+Over time this creates:
 
-Outputs are:
+- hidden coupling
+- inconsistent behavior
+- fragmented validation logic
+- and platform dependence on specific authoring tools
 
-* rebuildable
-* explainable
-* auditable
+ForgeDITA attempts to keep:
 
-## 3. Why This Matters
+- semantics
+- processing
+- validation
+- and publishing
 
-This model is designed to address long-standing failure points in structured content systems.
+inside the platform rather than inside the editor.
 
-### 3.1 Auditability
+### 4.5 Immutable Publishing Model
 
-* Every output can be traced to exact inputs and processing rules
-* Regulatory and compliance workflows become verifiable
+ForgeDITA treats publishing as a reproducible system event.
 
-### 3.2 Reproducibility
+Every release is pinned to:
 
-* Releases are not dependent on mutable environments
-* Historical outputs can be rebuilt with confidence
+- content baseline
+- semantic registry version
+- toolchain definition
+- publishing profile
+- validation state
 
-### 3.3 Semantic Integrity
+Outputs should be:
 
-* Specialization and metadata behave consistently
-* No hidden transformations or editor-side assumptions
+- rebuildable
+- explainable
+- auditable
+- and operationally trustworthy
 
-### 3.4 Exit Safety
+This model exists because many publishing environments slowly become dependent on:
 
-* Content remains clean and portable
-* Toolchain and behavior are explicitly defined
+- mutable plugin stacks
+- undocumented runtime changes
+- environment drift
+- and operational memory
 
-## 4. Open Questions
+Teams often stop trusting whether historical outputs can actually be reproduced.
 
-This model is intentionally direct and may expose trade-offs.
+ForgeDITA attempts to restore determinism.
 
-Key areas for validation:
+## 5. Why Existing Systems Become Operationally Fragile
 
-* Does the semantic registry fully capture DITA specialization behavior in practice?
-* Are there edge cases where implicit behavior is required for usability?
-* What are the performance implications of fully graph-aware services at scale?
-* How should validation responsibilities be balanced between client and server?
+Most documentation systems do not become difficult overnight.
 
-## 5. Intent
+Operational fragility accumulates gradually through:
 
-This is not a product pitch.
+- mutable publishing environments
+- scattered semantics
+- layered customization
+- undocumented workflow behavior
+- editor-defined logic
+- hidden dependencies
+- and process sediment added over years of operational adaptation
 
-It is an attempt to define a cleaner operating model for DITA-based content systems.
+Eventually organizations compensate through:
 
-The goal is simple:
+- spreadsheets
+- coordination rituals
+- manual verification
+- approval choreography
+- and institutional tribal knowledge
 
-* preserve the standard
-* make behavior explicit
-* reduce platform-induced complexity
-* support real-world publishing discipline
+The system remains functional.
 
-## 6. Request for Feedback
+But maintainability declines.
 
-If you have experience with DITA at scale, your perspective would be valuable.
+ForgeDITA is designed as an explicit response to that long-term entropy.
 
-Specifically:
+## 6. Architectural Trade-Offs
 
-* Where does this model break?
-* What assumptions are incomplete?
-* What would you change before implementation?
+This model intentionally introduces constraints.
+
+Those constraints are not accidental.
+
+They are attempts to replace hidden complexity with explicit structure.
+
+ForgeDITA likely requires:
+
+- stricter semantic governance
+- more disciplined versioning
+- more explicit lifecycle management
+- stronger operational consistency
+- clearer publishing definitions
+- and greater up-front architectural discipline
+
+The system may become less tolerant of:
+
+- ad hoc customization
+- undocumented workflow behavior
+- mutable runtime changes
+- and implicit operational assumptions
+
+Those trade-offs are intentional.
+
+The architecture favors:
+
+- explainability
+- reproducibility
+- portability
+- and long-term maintainability
+
+over short-term operational convenience.
+
+## 7. Open Questions
+
+Several important questions remain intentionally unresolved.
+
+## Semantic Modeling
+
+Can the semantic registry fully capture complex specialization behavior without introducing excessive rigidity?
+
+## Operational Usability
+
+Where are implicit behaviors necessary for practical authoring experience?
+
+## Performance
+
+What are the performance implications of fully graph-aware processing at enterprise scale?
+
+## Governance
+
+What governance models are required for semantic evolution across long-lived environments?
+
+## Operational Discipline
+
+How much explicitness can organizations realistically sustain without introducing excessive overhead?
+
+These questions matter.
+
+ForgeDITA is architecture-first specifically because these assumptions should be validated before large-scale implementation.
+
+## 8. Intent
+
+This document is not a product pitch.
+
+It is an attempt to define a cleaner operating model for DITA infrastructure.
+
+The goals are intentionally direct:
+
+- preserve the standard
+- make behavior explicit
+- reduce operational fragility
+- support reproducible publishing
+- and build systems that remain maintainable over time
+
+## 9. Request for Feedback
+
+If you have experience operating DITA environments at scale, your perspective would be valuable.
+
+Particularly:
+
+- Where does this model break?
+- Which assumptions feel unrealistic?
+- What operational realities are missing?
+- What trade-offs are unacceptable in practice?
+- What hidden failure modes should be considered?
 
 ## Related
 
-* Website: <https://forgedita.com>
-* Contact: [hello@forgedita.com](mailto:hello@forgedita.com)
+- Website: <https://forgedita.com>
+- Contact: <hello@forgedita.com>
 
 ForgeDITA is currently in architecture-first development toward MVP.
+
+Structured content infrastructure designed for long-term maintainability.

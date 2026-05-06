@@ -1,87 +1,156 @@
 # ForgeDITA Public
 
-Architecture-first exploration of a modern, standards-driven DITA CCMS.
+Architecture-first exploration of maintainable, standards-first DITA infrastructure.
 
-This repository contains public-facing documents that describe the ideas, principles, and technical direction behind ForgeDITA. It is not the product codebase. It is the thinking behind the product.
+This repository contains public-facing documents describing the architectural direction, operating principles, and technical assumptions behind ForgeDITA.
 
-## Purpose
+This is not the product codebase.
 
-ForgeDITA is being built from a simple premise:
+It is the thinking behind the product.
 
-A DITA CCMS should preserve the standard, make behavior explicit, and reduce platform-induced complexity.
+---
 
-Most existing systems have evolved through layers of enterprise compromise. The result is often:
+## Why This Repository Exists
 
-* opaque behavior
-* difficult administration
-* fragile publishing pipelines
-* vendor-shaped workflows
+Many structured content environments slowly become operationally difficult to live with.
 
-This repository exists to document an alternative.
+Experienced practitioners recognize the pattern:
+
+- publishing behavior drifts
+- customization accumulates
+- semantics become fragmented
+- workflows expand around platform limitations
+- operational workarounds become institutionalized
+- and tribal knowledge becomes necessary just to maintain stability
+
+Teams adapt.
+
+They build processes around the system.
+
+Eventually the operational overhead surrounding documentation becomes larger than the documentation changes themselves.
+
+ForgeDITA exists because too many organizations quietly accept this trajectory as inevitable.
+
+This repository documents an alternative architectural approach.
+
+---
+
+## Core Position
+
+ForgeDITA is built around a direct premise:
+
+## Documentation infrastructure should remain understandable and maintainable over time
+
+The platform is intentionally designed around:
+
+- standards integrity
+- explicit semantics
+- reproducible publishing
+- graph-aware processing
+- operational clarity
+- and long-term maintainability
+
+The goal is not to accumulate more enterprise complexity.
+
+The goal is to reduce operational fragility before it becomes normalized.
+
+---
 
 ## Contents
 
-This repository will grow into a set of documents that explain the ForgeDITA architecture to experienced DITA and structured-authoring professionals.
+This repository contains architecture-focused documents intended for experienced DITA and structured-authoring practitioners.
 
-The current documents are:
+Current documents include:
 
-### Architecture Brief
+## Architecture Brief
 
-A focused overview of the core ForgeDITA model:
+A high-level overview of the ForgeDITA operating model:
 
-* native XML as the system of record
-* tenant-scoped semantic registry
-* graph-aware services
-* BYOE (Bring Your Own Editor)
-* immutable, reproducible publishing
+- native XML as system of record
+- tenant-scoped semantic registry
+- graph-aware services
+- Bring Your Own Editor architecture
+- immutable publishing model
+- operational maintainability principles
 
-### Multi-Tenant Architecture and Toolchain Model
+## Multi-Tenant Architecture and Toolchain Registry Model
 
-A deeper look at how ForgeDITA approaches multi-tenancy:
+A deeper exploration of:
 
-* tenant isolation across all system layers
-* toolchain registry as the control point for processing
-* versioned, immutable publishing environments
-* reproducible releases tied to explicit inputs
+- tenant isolation
+- explicit processing environments
+- toolchain versioning
+- reproducible publishing
+- semantic isolation
+- graph-aware multi-tenancy
+- and operational reproducibility
 
-Start here:
+---
 
-* [Architecture Brief](ForgeDITAArchitectureBrief.md)
-* [Multi-Tenant Architecture and the Toolchain Registry Model](multiTenant.md)
+## Start Here
 
-## What This Is
+[Architecture Brief](ForgeDITAArchitectureBrief.md)
+[Multi-Tenant Architecture and the Toolchain Registry Model](multiTenant.md)
 
-* A working set of ideas
-* A technical position on how DITA systems should behave
-* A growing body of architectural documentation
+---
 
-## What This Is Not
+## What This Repository Is
 
-* A marketing site
-* A feature list
-* A finalized implementation
+- a working architectural model
+- a technical position on maintainable DITA infrastructure
+- a set of explicit assumptions and trade-offs
+- an attempt to make system behavior understandable
 
-The goal is clarity, not hype.
+---
 
-## Status
+## What This Repository Is Not
 
-ForgeDITA is in **architecture-first development**.
+- a marketing site
+- a feature checklist
+- a finalized implementation
+- a generic SaaS positioning exercise
 
-The goal is to validate the model before building the full system.
+The goal is clarity.
+
+Not hype.
+
+---
+
+## Why Architecture-First
+
+ForgeDITA is intentionally being developed architecture-first.
+
+The goal is to validate:
+
+- operational assumptions
+- semantic models
+- reproducibility constraints
+- governance requirements
+- and architectural trade-offs
+
+before large-scale implementation.
+
+The architecture matters because operational fragility is usually easier to prevent than to remove later.
+
+---
 
 ## Feedback
 
-If you work with DITA at scale, your perspective is valuable.
+If you operate DITA systems at scale, your perspective would be valuable.
 
-Key questions:
+Particularly:
 
-* Where does this model break?
-* What assumptions are incomplete?
-* What would you change before implementation?
+- Where does this model fail operationally?
+- Which assumptions become unrealistic in practice?
+- What hidden complexity risks remain?
+- Which trade-offs would organizations reject?
+- What long-term maintenance problems are still unsolved?
+
+---
 
 ## Contact
 
-[hello@forgedita.com](mailto:hello@forgedita.com)
-https://forgedita.com
+<hello@forgedita.com>
+<https://forgedita.com>
 
-Structured content, forged right.
+Structured content infrastructure designed for long-term maintainability.
