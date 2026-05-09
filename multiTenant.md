@@ -398,3 +398,7 @@ Questions:
 ForgeDITA is currently in architecture-first development toward MVP.
 
 Structured content infrastructure designed for long-term operational maintainability.
+
+---
+
+Copyright 2026 ForgeDITA.
